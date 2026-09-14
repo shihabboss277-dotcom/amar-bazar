@@ -1,0 +1,1967 @@
+ <!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>আমার বাজার</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+padding:14px;
+font-family:Arial,sans-serif;
+background:#f1f5f9;
+color:#172033;
+}
+
+.header{
+background:linear-gradient(135deg,#16a34a,#15803d);
+color:white;
+padding:18px;
+border-radius:24px;
+box-shadow:0 8px 22px #c5d2c9;
+margin-bottom:16px;
+}
+
+.header-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+.header h1{
+margin:0;
+font-size:27px;
+}
+
+.menu-btn{
+border:0;
+background:white;
+color:#15803d;
+width:44px;
+height:44px;
+border-radius:13px;
+font-size:24px;
+font-weight:bold;
+}
+
+.header p{
+margin:7px 0 0;
+font-size:14px;
+}
+
+.cart{
+margin-top:14px;
+display:inline-block;
+background:white;
+color:#15803d;
+padding:9px 15px;
+border-radius:20px;
+font-weight:bold;
+font-size:14px;
+}
+
+.menu{
+display:none;
+background:white;
+padding:12px;
+border-radius:18px;
+margin-bottom:16px;
+box-shadow:0 5px 18px #d5dbe3;
+}
+
+.menu.show{
+display:block;
+}
+
+.menu button{
+width:100%;
+border:0;
+background:#f8fafc;
+padding:14px;
+margin:4px 0;
+border-radius:12px;
+text-align:left;
+font-size:15px;
+font-weight:bold;
+color:#172033;
+}
+
+.menu button:hover{
+background:#dcfce7;
+}
+
+.page{
+display:none;
+}
+
+.page.active{
+display:block;
+}
+
+.search-box{
+background:white;
+padding:8px 12px;
+border-radius:17px;
+display:flex;
+align-items:center;
+gap:8px;
+box-shadow:0 4px 15px #d9dfe7;
+margin-bottom:13px;
+border:1px solid #e5e7eb;
+}
+
+.search-box span{
+font-size:21px;
+}
+
+.search-box input{
+border:0;
+outline:none;
+width:100%;
+font-size:16px;
+padding:9px 5px;
+background:transparent;
+}
+
+.categories{
+display:flex;
+gap:8px;
+overflow-x:auto;
+padding:3px 2px 12px;
+}
+
+.categories::-webkit-scrollbar{
+display:none;
+}
+
+.category-btn{
+white-space:nowrap;
+border:1px solid #e5e7eb;
+background:white;
+color:#374151;
+padding:10px 14px;
+border-radius:22px;
+font-size:14px;
+font-weight:bold;
+box-shadow:0 2px 7px #dfe4ea;
+}
+
+.category-btn.active{
+background:#16a34a;
+color:white;
+border-color:#16a34a;
+}
+
+#products{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:13px;
+}
+
+
+/* সুন্দর Product Card Design */
+.product{
+  background:linear-gradient(180deg,#ffffff,#f8fafc);
+  border-radius:22px;
+  padding:9px;
+  box-shadow:0 6px 18px rgba(15,23,42,.10);
+  overflow:hidden;
+  border:1px solid #e8edf2;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+
+.product:active{
+  transform:scale(.98);
+}
+
+.product img{
+  width:100%;
+  height:145px;
+  object-fit:cover;
+  border-radius:17px;
+  display:block;
+  background:#f1f5f9;
+}
+
+.product h2{
+  font-size:17px;
+  margin:11px 4px 8px;
+  color:#172033;
+  font-weight:700;
+}
+
+.quantity-control{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  margin:9px 0;
+}
+
+.quantity-control button{
+  width:36px;
+  height:36px;
+  border:none;
+  border-radius:10px;
+  font-size:21px;
+  font-weight:bold;
+  cursor:pointer;
+  background:#e8f5ec;
+  color:#15803d;
+}
+
+.quantity-control input{
+  width:62px!important;
+  height:36px;
+  text-align:center;
+  margin:0!important;
+  border:1px solid #d9dee5;
+  border-radius:10px;
+  background:white;
+  font-weight:bold;
+}
+
+.product input[type="number"]{
+  border-radius:10px;
+}
+
+.add-product-btn{
+  box-shadow:0 4px 10px rgba(22,163,74,.18);
+}
+
+.add-box{
+background:white;
+padding:19px;
+border-radius:21px;
+box-shadow:0 5px 17px #d8dee6;
+}
+
+.add-box h2{
+margin-top:0;
+font-size:20px;
+}
+
+.add-box p{
+font-size:14px;
+color:#64748b;
+}
+
+.add-box input,
+.add-box select{
+width:100%;
+padding:12px;
+margin:6px 0;
+border:1px solid #d5dae1;
+border-radius:11px;
+font-size:15px;
+background:#f8fafc;
+}
+
+.add-box button{
+width:100%;
+border:0;
+background:#16a34a;
+color:white;
+padding:12px;
+border-radius:11px;
+font-size:15px;
+font-weight:bold;
+margin-top:8px;
+}
+
+.add-box label{
+display:block;
+margin-top:10px;
+font-size:14px;
+font-weight:bold;
+}
+
+#note{
+background:white;
+padding:18px;
+border-radius:21px;
+box-shadow:0 5px 17px #d8dee6;
+}
+
+#note h2{
+margin-top:0;
+font-size:20px;
+}
+
+.note-item{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:8px;
+padding:13px 0;
+border-bottom:1px solid #edf0f3;
+}
+
+.note-item span{
+flex:1;
+font-size:14px;
+}
+
+.delete-btn{
+background:#ef4444;
+color:white;
+border:0;
+border-radius:9px;
+padding:8px 10px;
+}
+
+.save-btn{
+background:#16a34a;
+color:white;
+border:0;
+padding:11px 12px;
+border-radius:10px;
+margin-top:14px;
+font-weight:bold;
+}
+
+.share-btn{border:0;background:#16a34a;color:white;padding:11px 14px;border-radius:9px;margin:5px;font-weight:bold;cursor:pointer;}
+
+.copy-btn{
+background:#2563eb;
+color:white;
+border:0;
+padding:11px 12px;
+border-radius:10px;
+margin-top:14px;
+margin-left:4px;
+font-weight:bold;
+}
+
+.clear-btn{
+background:#dc2626;
+color:white;
+border:0;
+padding:11px 12px;
+border-radius:10px;
+margin-top:14px;
+margin-left:4px;
+font-weight:bold;
+}
+
+.back-btn{
+width:100%;
+border:0;
+background:#374151;
+color:white;
+padding:12px;
+border-radius:11px;
+margin-top:15px;
+font-weight:bold;
+}
+
+.remove-product-btn{
+width:100%;
+border:0;
+background:#fee2e2;
+color:#dc2626;
+padding:8px;
+border-radius:9px;
+margin-top:6px;
+font-size:12px;
+font-weight:bold;
+}
+
+@media(max-width:380px){
+
+body{
+padding:11px;
+}
+
+#products{
+gap:9px;
+}
+
+.product img{
+height:120px;
+}
+
+.product h2{
+font-size:15px;
+}
+
+}
+
+.note-product{display:flex;align-items:center;gap:7px;}
+.note-product-image{width:24px;height:24px;object-fit:cover;border-radius:5px;flex-shrink:0;display:block;}
+
+/* Quantity + / - */
+.quantity-control{display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0;}
+.quantity-control button{width:38px;height:38px;border:none;border-radius:9px;font-size:22px;font-weight:bold;cursor:pointer;background:#eee;}
+.quantity-control input{width:70px!important;text-align:center;margin:0!important;}
+
+
+.edit-btn{
+  border:none;
+  border-radius:8px;
+  padding:8px 12px;
+  margin:4px;
+  cursor:pointer;
+  font-size:14px;
+  background:#e8f0fe;
+  color:#1a73e8;
+  font-weight:600;
+}
+
+.price-input{
+  margin-bottom:14px!important;
+}
+
+.add-product-btn{
+  margin-top:6px;
+}
+
+
+/* আরও সুন্দর ও পরিষ্কার Product Card */
+.product{
+  position:relative;
+  background:#fff;
+  border-radius:24px;
+  padding:10px;
+  box-shadow:0 7px 22px rgba(15,23,42,.11);
+  border:1px solid #e7edf1;
+}
+
+.product img{
+  height:150px;
+  border-radius:18px;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.5);
+}
+
+.product h2{
+  font-size:16px;
+  margin:12px 5px 9px;
+  line-height:1.35;
+}
+
+.quantity-control{
+  background:#f8fafc;
+  border:1px solid #edf1f4;
+  border-radius:13px;
+  padding:5px;
+  gap:6px;
+}
+
+.quantity-control button{
+  width:35px;
+  height:35px;
+  border-radius:10px;
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.quantity-control input{
+  width:58px!important;
+  height:35px;
+  border:0!important;
+  background:transparent!important;
+  font-size:15px;
+}
+
+.price-input{
+  margin-top:9px!important;
+  margin-bottom:15px!important;
+  height:43px;
+  border-radius:12px!important;
+  background:#f8fafc!important;
+}
+
+.add-product-btn{
+  height:43px;
+  border-radius:12px;
+  font-size:13px;
+  letter-spacing:.1px;
+  box-shadow:0 5px 12px rgba(22,163,74,.20);
+}
+
+.remove-product-btn{
+  border-radius:10px;
+}
+
+
+/* Compact Professional Card */
+.product{
+  background:#fff;
+  border-radius:19px;
+  padding:8px;
+  box-shadow:0 4px 14px rgba(15,23,42,.09);
+  border:1px solid #e9eef2;
+}
+
+.product img{
+  height:125px;
+  border-radius:14px;
+}
+
+.product h2{
+  font-size:15px;
+  margin:8px 3px 6px;
+  line-height:1.25;
+}
+
+.quantity-control{
+  background:#f8fafc;
+  border:1px solid #edf1f4;
+  border-radius:11px;
+  padding:4px;
+  gap:5px;
+  margin:6px 0;
+}
+
+.quantity-control button{
+  width:32px;
+  height:32px;
+  border-radius:9px;
+  font-size:19px;
+}
+
+.quantity-control input{
+  width:50px!important;
+  height:32px;
+  font-size:14px;
+}
+
+.price-input{
+  margin-top:6px!important;
+  margin-bottom:10px!important;
+  height:39px;
+  padding:8px!important;
+  border-radius:10px!important;
+  font-size:13px!important;
+}
+
+.add-product-btn{
+  height:39px;
+  padding:8px 3px;
+  border-radius:10px;
+  font-size:12px;
+  box-shadow:0 3px 8px rgba(22,163,74,.15);
+}
+
+@media(max-width:380px){
+  .product img{height:115px;}
+  .product h2{font-size:14px;}
+}
+
+
+/* Price box alignment fix */
+.price-input{
+  width:100%!important;
+  max-width:100%!important;
+  box-sizing:border-box!important;
+  display:block;
+  margin-left:0!important;
+  margin-right:0!important;
+  padding:8px 10px!important;
+}
+
+
+/* Android + iPhone Responsive Support */
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+
+body{
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  -webkit-tap-highlight-color:transparent;
+}
+
+button,
+input,
+select{
+  -webkit-appearance:none;
+  appearance:none;
+  touch-action:manipulation;
+}
+
+input,
+select{
+  font-size:16px;
+}
+
+/* iPhone ছোট স্ক্রিন */
+@media(max-width:430px){
+  body{
+    padding:10px;
+  }
+
+  .header{
+    padding:15px;
+    border-radius:20px;
+  }
+
+  .header h1{
+    font-size:24px;
+  }
+
+  #products{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:9px;
+  }
+
+  .product{
+    min-width:0;
+  }
+
+  .product img{
+    width:100%;
+    height:115px;
+  }
+
+  .product h2{
+    font-size:14px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .price-input{
+    min-width:0!important;
+  }
+
+  .add-product-btn{
+    white-space:nowrap;
+  }
+}
+
+/* খুব ছোট ফোন */
+@media(max-width:350px){
+  body{
+    padding:7px;
+  }
+
+  #products{
+    gap:7px;
+  }
+
+  .product{
+    padding:7px;
+    border-radius:16px;
+  }
+
+  .product img{
+    height:105px;
+  }
+
+  .product h2{
+    font-size:13px;
+  }
+
+  .quantity-control button{
+    width:30px;
+    height:30px;
+  }
+
+  .quantity-control input{
+    width:45px!important;
+  }
+
+  .price-input{
+    height:37px;
+    padding:7px 8px!important;
+  }
+
+  .add-product-btn{
+    height:37px;
+    font-size:11px;
+  }
+}
+
+
+.my-category{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#f1f5f9;padding:10px;border-radius:10px;margin-top:8px;}
+.category-delete{border:0;background:#ef4444;color:white;padding:8px 11px;border-radius:8px;font-weight:bold;}
+</style>
+
+<style id="professional-design">
+/* ===== Professional Design — CSS only, functionality untouched ===== */
+html{scroll-behavior:smooth}
+body{
+  padding:12px;
+  max-width:760px;
+  margin:0 auto;
+  background:linear-gradient(180deg,#f8fafc 0%,#eef5f1 100%);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+.header{
+  padding:17px;
+  border-radius:22px;
+  margin-bottom:13px;
+  box-shadow:0 10px 28px rgba(21,128,61,.18);
+}
+.header h1{font-size:25px;letter-spacing:-.3px}
+.header p{opacity:.92}
+.menu-btn{
+  width:43px;height:43px;border-radius:14px;
+  box-shadow:0 3px 10px rgba(0,0,0,.10);
+}
+.cart{box-shadow:0 3px 10px rgba(0,0,0,.08)}
+.menu{
+  padding:9px;
+  border-radius:17px;
+  box-shadow:0 8px 24px rgba(15,23,42,.10);
+  border:1px solid #e7edf0;
+}
+.menu button{
+  border-radius:12px!important;
+  padding:11px 12px!important;
+  transition:.15s ease;
+}
+.search-box{
+  padding:7px 11px;
+  border-radius:15px;
+  margin-bottom:11px;
+  box-shadow:0 5px 18px rgba(15,23,42,.07);
+  border:1px solid #e6ece9;
+}
+.search-box input{font-size:15px}
+.categories{padding:2px 1px 10px;gap:7px}
+.category-btn{
+  padding:9px 13px;
+  border-radius:18px;
+  box-shadow:0 2px 8px rgba(15,23,42,.07);
+  border-color:#e1e8e4;
+  transition:.15s ease;
+}
+.category-btn:active{transform:scale(.96)}
+#products{gap:11px}
+.product{
+  border-radius:18px;
+  padding:8px;
+  box-shadow:0 7px 20px rgba(15,23,42,.08);
+  border:1px solid #e7ece9;
+}
+.product img{height:132px;border-radius:14px}
+.product h2{font-size:16px;margin:9px 3px 7px}
+.product button{border-radius:10px!important}
+.quantity-control{
+  border-radius:11px!important;
+  background:#f4f7f5!important;
+  border:1px solid #e5ebe7!important;
+}
+.add-box{
+  padding:16px;
+  border-radius:18px;
+  box-shadow:0 7px 22px rgba(15,23,42,.08);
+  border:1px solid #e6ece9;
+}
+.add-box h2{font-size:19px}
+.add-box input,.add-box select{
+  padding:11px;
+  border-radius:10px;
+  background:#fbfcfc;
+}
+.add-box button,.save-btn,.share-btn,.copy-btn,.clear-btn,.add-product-btn{
+  border-radius:11px!important;
+  min-height:42px;
+  box-shadow:0 4px 10px rgba(15,23,42,.08);
+  transition:transform .12s ease,opacity .12s ease;
+}
+.add-box button:active,.save-btn:active,.share-btn:active,.copy-btn:active,.clear-btn:active,.add-product-btn:active,.delete-btn:active,.edit-btn:active,.category-delete:active{
+  transform:scale(.97);
+}
+.my-category{
+  border:1px solid #e4ebe7!important;
+  box-shadow:0 3px 10px rgba(15,23,42,.05);
+  padding:9px!important;
+  border-radius:12px!important;
+}
+.category-delete,.delete-btn{border-radius:9px!important}
+.note-item{
+  background:#fff;
+  padding:10px!important;
+  margin:7px 0;
+  border:1px solid #e7ece9;
+  border-radius:13px;
+  box-shadow:0 3px 12px rgba(15,23,42,.05);
+}
+.note-product{gap:9px!important}
+.note-product-image{border-radius:8px!important;object-fit:cover}
+.edit-btn{border-radius:9px!important}
+@media(max-width:380px){
+  body{padding:9px}
+  .header h1{font-size:22px}
+  .product img{height:118px}
+  .product h2{font-size:15px}
+  #products{gap:9px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="header-top">
+
+<h1>🛒 আমার বাজার</h1>
+
+<button class="menu-btn" onclick="toggleMenu()">
+☰
+</button>
+
+</div>
+
+<p>সহজেই আপনার বাজারের তালিকা তৈরি করুন</p>
+
+<div class="cart">
+🛒 কার্টে: <span id="cartCount">0</span> টি পণ্য
+</div>
+
+</div>
+
+
+<div id="menu" class="menu">
+
+<button onclick="showPage('home')">
+🏠 বাজার
+</button>
+
+<button onclick="showPage('categoryPage')">
+📂 নতুন ক্যাটাগরি
+</button>
+
+<button onclick="showPage('productPage')">
+➕ নতুন পণ্য যোগ করুন
+</button>
+
+<button onclick="showPage('notePage')">
+📝 আজকের বাজার
+</button>
+
+</div>
+
+
+<!-- বাজার -->
+
+<div id="home" class="page active">
+
+<div class="search-box">
+
+<span>🔍</span>
+
+<input
+type="text"
+id="searchInput"
+placeholder="পণ্য খুঁজুন..."
+onkeyup="searchProducts()">
+
+</div>
+
+
+<div class="categories" id="categories">
+
+<button
+class="category-btn active"
+onclick="filterCategory('all',this)">
+🛒 সব
+</button>
+
+<button
+class="category-btn"
+onclick="filterCategory('vegetable',this)">
+🥬 সবজি
+</button>
+
+<button
+class="category-btn"
+onclick="filterCategory('fish',this)">
+🐟 মাছ
+</button>
+
+<button
+class="category-btn"
+onclick="filterCategory('meat',this)">
+🥩 মাংস
+</button>
+
+<button
+class="category-btn"
+onclick="filterCategory('egg',this)">
+🥚 ডিম
+</button>
+
+<button
+class="category-btn"
+onclick="filterCategory('spice',this)">
+🧂 মসলা
+</button>
+
+<button
+class="category-btn"
+onclick="filterCategory('other',this)">
+🛍️ অন্যান্য
+</button>
+
+</div>
+
+
+<div id="products">
+
+<div class="product" data-category="egg">
+
+<img src="https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=500">
+
+<h2>🥚 ডিম</h2>
+
+<div class="quantity-control">
+<button type="button" onclick="changeQty('egg',-1)">−</button>
+<input type="number" id="egg" value="1" min="1">
+<button type="button" onclick="changeQty('egg',1)">+</button>
+</div>
+
+<input
+type="number"
+id="eggPrice" class="price-input"
+placeholder="💰 দাম লিখুন (Optional)"
+min="0">
+
+<button
+class="add-product-btn"
+onclick="addProduct('ডিম','egg','eggPrice','টা','https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=500')">
+
+🛒 বাজারে যোগ করুন
+
+</button>
+
+</div>
+
+
+<div class="product" data-category="vegetable">
+
+<img src="https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500">
+
+<h2>🥔 আলু</h2>
+
+<div class="quantity-control">
+<button type="button" onclick="changeQty('potato',-1)">−</button>
+<input type="number" id="potato" value="1" min="1">
+<button type="button" onclick="changeQty('potato',1)">+</button>
+</div>
+
+<input
+type="number"
+id="potatoPrice" class="price-input"
+placeholder="💰 দাম লিখুন (Optional)"
+min="0">
+
+<button
+class="add-product-btn"
+onclick="addProduct('আলু','potato','potatoPrice','কেজি','https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=500')">
+
+🛒 বাজারে যোগ করুন
+
+</button>
+
+</div>
+
+
+<div class="product" data-category="vegetable">
+
+<img src="https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500">
+
+<h2>🧅 পেঁয়াজ</h2>
+
+<div class="quantity-control">
+<button type="button" onclick="changeQty('onion',-1)">−</button>
+<input type="number" id="onion" value="1" min="1">
+<button type="button" onclick="changeQty('onion',1)">+</button>
+</div>
+
+<input
+type="number"
+id="onionPrice" class="price-input"
+placeholder="💰 দাম লিখুন (Optional)"
+min="0">
+
+<button
+class="add-product-btn"
+onclick="addProduct('পেঁয়াজ','onion','onionPrice','কেজি','https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=500')">
+
+🛒 বাজারে যোগ করুন
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- নতুন ক্যাটাগরি -->
+
+<div id="categoryPage" class="page">
+
+<div class="add-box">
+
+<h2>📂 নতুন ক্যাটাগরি</h2>
+
+<p>
+আপনার প্রয়োজন অনুযায়ী নতুন ক্যাটাগরি তৈরি করুন।
+</p>
+
+<h3 style="margin-top:18px">📋 আমার যোগ করা ক্যাটাগরি</h3>
+<div id="myCategories"></div>
+
+<input
+type="text"
+id="newCategoryName"
+placeholder="যেমন: 🍎 ফল">
+
+<button onclick="addCategory()">
+➕ ক্যাটাগরি যোগ করুন
+</button>
+
+<button
+class="back-btn"
+onclick="showPage('home')">
+🏠 বাজারে ফিরে যান
+</button>
+
+</div>
+
+</div>
+
+
+<!-- নতুন পণ্য -->
+
+<div id="productPage" class="page">
+
+<div class="add-box">
+
+<h2>➕ নতুন পণ্য যোগ করুন</h2>
+
+<input
+type="text"
+id="newName"
+placeholder="পণ্যের নাম লিখুন">
+
+<select id="newCategory">
+
+<option value="vegetable">🥬 সবজি</option>
+<option value="fish">🐟 মাছ</option>
+<option value="meat">🥩 মাংস</option>
+<option value="egg">🥚 ডিম</option>
+<option value="spice">🧂 মসলা</option>
+<option value="other">🛍️ অন্যান্য</option>
+
+</select>
+
+<select id="newUnit">
+
+<option value="টা">টা</option>
+<option value="কেজি">কেজি</option>
+<option value="গ্রাম">গ্রাম</option>
+<option value="লিটার">লিটার</option>
+<option value="প্যাকেট">প্যাকেট</option>
+
+</select>
+
+<label>
+🖼️ পণ্যের ছবি নির্বাচন করুন
+</label>
+
+<input
+type="file"
+id="newImage"
+accept="image/*">
+
+<button onclick="createProduct()">
+➕ পণ্য যোগ করুন
+</button>
+
+<button
+class="back-btn"
+onclick="showPage('home')">
+🏠 বাজারে ফিরে যান
+</button>
+
+</div>
+
+</div>
+
+
+<!-- আজকের বাজার -->
+
+<div id="notePage" class="page">
+
+<div id="note"></div>
+
+<button
+class="back-btn"
+onclick="showPage('home')">
+🏠 বাজারে ফিরে যান
+</button>
+
+</div>
+
+
+<script>
+
+/* বাজারের তালিকা */
+
+let shoppingList =
+JSON.parse(
+localStorage.getItem("shoppingList")
+) || [];
+
+
+/* নতুন পণ্য */
+
+let customProducts =
+JSON.parse(
+localStorage.getItem("customProducts")
+) || [];
+
+
+/* নতুন ক্যাটাগরি */
+
+let customCategories =
+JSON.parse(
+localStorage.getItem("customCategories")
+) || [];
+
+
+let currentCategory="all";
+
+
+/* Menu */
+
+function toggleMenu(){
+
+document
+.getElementById("menu")
+.classList.toggle("show");
+
+}
+
+
+/* Page */
+
+function showPage(pageId){
+
+document
+.querySelectorAll(".page")
+.forEach(function(page){
+
+page.classList.remove("active");
+
+});
+
+document
+.getElementById(pageId)
+.classList.add("active");
+
+document
+.getElementById("menu")
+.classList.remove("show");
+
+if(pageId==="notePage"){
+
+showNote();
+
+}
+
+if(pageId==="categoryPage"){
+
+renderMyCategories();
+
+}
+
+}
+
+
+/* Save Shopping */
+
+function saveList(){
+
+localStorage.setItem(
+"shoppingList",
+JSON.stringify(shoppingList)
+);
+
+}
+
+
+/* Cart */
+
+function updateCartCount(){
+
+document.getElementById("cartCount").innerText =
+shoppingList.length;
+
+}
+
+
+/* Quantity + / - */
+function changeQty(inputId, change){
+let input=document.getElementById(inputId);
+if(!input){return;}
+let value=parseInt(input.value)||1;
+value += change;
+if(value<1){value=1;}
+input.value=value;
+}
+
+/* Add to Shopping */
+
+function addProduct(
+name,
+inputId,
+priceId,
+unit,
+image,
+customProductId
+){
+
+let amount =
+document.getElementById(inputId).value;
+
+let price =
+document.getElementById(priceId).value;
+
+if(amount===""){
+
+alert("পরিমাণ লিখুন");
+
+return;
+
+}
+
+shoppingList.push({
+
+name:name,
+amount:amount,
+price:price,
+unit:unit,
+image:image || "",
+customProductId: customProductId || ""
+
+});
+
+saveList();
+
+showNote();
+
+updateCartCount();
+
+document.getElementById(inputId).value="";
+
+document.getElementById(priceId).value="";
+
+alert("✅ বাজারে যোগ হয়েছে!");
+
+}
+
+
+/* Delete Shopping */
+
+
+function editItem(index){
+  let item = shoppingList[index];
+  if(!item) return;
+
+  let row = document.querySelectorAll('.note-item')[index];
+  if(!row) return;
+
+  row.innerHTML = `
+    <div style="display:flex;align-items:center;gap:7px;flex:1;min-width:0;">
+      ${item.image ? `<img src="${item.image}" class="note-product-image" alt="${item.name}">` : '🛒'}
+      <div style="flex:1;min-width:0;">
+        <b>${item.name}</b>
+        <div style="display:flex;gap:5px;margin-top:5px;">
+          <input id="editAmount${index}" value="${String(item.amount).replace(/"/g,'&quot;')}" style="width:70px;padding:6px;border:1px solid #ccc;border-radius:7px;">
+          <span style="padding-top:6px;">${item.unit}</span>
+          <input id="editPrice${index}" value="${String(item.price || '').replace(/"/g,'&quot;')}" placeholder="দাম" style="width:70px;padding:6px;border:1px solid #ccc;border-radius:7px;">
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;gap:5px;flex-shrink:0;">
+      <button class="edit-btn" onclick="saveEdit(${index})">✅</button>
+      <button class="delete-btn" onclick="showNote()">↩️</button>
+    </div>`;
+}
+
+function saveEdit(index){
+  let amountInput=document.getElementById('editAmount'+index);
+  let priceInput=document.getElementById('editPrice'+index);
+  if(!amountInput) return;
+  let amount=amountInput.value.trim();
+  if(amount===''){ alert('পরিমাণ খালি রাখা যাবে না'); return; }
+  shoppingList[index].amount=amount;
+  shoppingList[index].price=priceInput ? priceInput.value.trim() : '';
+  saveList();
+  showNote();
+  updateCartCount();
+  alert('✅ তথ্য আপডেট হয়েছে!');
+}
+
+function deleteProduct(index){
+
+shoppingList.splice(index,1);
+
+saveList();
+
+showNote();
+
+updateCartCount();
+
+}
+
+
+/* Clear Shopping */
+
+function clearAll(){
+    // আজকের বাজারের সব পণ্য একসাথে মুছে দেবে
+    shoppingList = [];
+    localStorage.removeItem("shoppingList");
+    document.getElementById("note").innerHTML =
+        "<h2>📝 আজকের বাজার</h2><p>এখনো কোনো পণ্য নির্বাচন করা হয়নি।</p>";
+    updateCartCount();
+}
+
+
+/* Copy */
+
+function copyNote(){
+
+if(shoppingList.length===0){
+
+alert("কপি করার মতো কোনো পণ্য নেই");
+
+return;
+
+}
+
+let text="📝 আজকের বাজার\n\n";
+
+shoppingList.forEach(function(item,index){
+
+text+=(index+1)+". "+
+item.name+" — "+
+item.amount+" "+
+item.unit;
+
+if(item.price!==""){
+
+text+=" — 💰 "+item.price+" টাকা";
+
+}
+
+text+="\n";
+
+});
+
+navigator.clipboard.writeText(text);
+
+alert("✅ বাজারের নোট কপি হয়েছে!");
+
+}
+
+
+function shareNote(){
+if(shoppingList.length===0){alert("শেয়ার করার মতো কোনো পণ্য নেই");return;}
+let text="📝 আজকের বাজার\n\n";
+shoppingList.forEach(function(item,index){
+text+=(index+1)+". "+item.name+" — "+item.amount+" "+item.unit;
+if(item.price!==""){text+=" — 💰 "+item.price+" টাকা";}
+text+="\n";
+});
+if(navigator.share){navigator.share({title:"আজকের বাজার",text:text}).catch(function(){});}
+else if(navigator.clipboard){navigator.clipboard.writeText(text).then(function(){alert("📤 Share সুবিধা নেই, তাই নোটটি কপি করা হয়েছে।");});}
+else{alert(text);}
+}
+
+/* Save Message */
+
+function saveMessage(){
+
+saveList();
+
+alert("💾 বাজারের তালিকা Save হয়েছে!");
+
+}
+
+
+/* ছবি Data URL বানানো */
+
+function imageToDataURL(file){
+
+return new Promise(function(resolve,reject){
+
+let reader=new FileReader();
+
+reader.onload=function(){
+
+resolve(reader.result);
+
+};
+
+reader.onerror=function(){
+
+reject();
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+}
+
+
+/* নতুন পণ্য তৈরি */
+
+async function createProduct(){
+
+let name =
+document.getElementById("newName")
+.value
+.trim();
+
+let category =
+document.getElementById("newCategory")
+.value;
+
+let unit =
+document.getElementById("newUnit")
+.value;
+
+let imageFile =
+document.getElementById("newImage")
+.files[0];
+
+
+if(name===""){
+
+alert("পণ্যের নাম লিখুন");
+
+return;
+
+}
+
+
+if(!imageFile){
+
+alert("পণ্যের একটি ছবি নির্বাচন করুন");
+
+return;
+
+}
+
+
+try{
+
+let imageData =
+await imageToDataURL(imageFile);
+
+
+let product={
+
+id:Date.now(),
+
+name:name,
+
+category:category,
+
+unit:unit,
+
+image:imageData
+
+};
+
+
+customProducts.push(product);
+
+
+/* Permanent Save */
+
+localStorage.setItem(
+"customProducts",
+JSON.stringify(customProducts)
+);
+
+
+/* পণ্য Card তৈরি */
+
+addProductCard(product);
+
+
+/* Form Clear */
+
+document.getElementById("newName").value="";
+
+document.getElementById("newImage").value="";
+
+
+alert("✅ নতুন পণ্য Save হয়েছে!");
+
+
+showPage("home");
+
+}
+
+catch(error){
+
+alert("❌ পণ্য Save করা যায়নি");
+
+}
+
+}
+
+
+/* Product Card */
+
+function addProductCard(product){
+
+let id="custom_"+product.id;
+
+let priceId=id+"_price";
+
+let div=document.createElement("div");
+
+div.className="product";
+
+div.setAttribute(
+"data-category",
+product.category
+);
+
+div.setAttribute(
+"data-custom-id",
+product.id
+);
+
+
+div.innerHTML=`
+
+<img
+src="${product.image}"
+alt="${product.name}">
+
+<h2>🛍️ ${product.name}</h2>
+
+<div class="quantity-control">
+<button type="button" onclick="changeQty('${id}',-1)">−</button>
+<input type="number" id="${id}" value="1" min="1">
+<button type="button" onclick="changeQty('${id}',1)">+</button>
+</div>
+
+<input
+type="number"
+id="${priceId}" class="price-input"
+placeholder="💰 দাম লিখুন (Optional)"
+min="0">
+
+<button
+class="add-product-btn"
+onclick="addProduct('${product.name}','${id}','${priceId}','${product.unit}','${product.image}',${product.id})">
+
+🛒 বাজারে যোগ করুন
+
+</button>
+
+<button
+class="remove-product-btn"
+onclick="removeCustomProduct(${product.id})">
+
+🗑️ পণ্য মুছুন
+
+</button>
+
+`;
+
+
+document
+.getElementById("products")
+.appendChild(div);
+
+}
+
+
+/* নতুন পণ্য মুছুন */
+
+function removeCustomProduct(id){
+    // ID number/string যাই হোক, ঠিকভাবে মিলিয়ে পণ্য মুছবে
+    customProducts = customProducts.filter(function(product){
+        return String(product.id) !== String(id);
+    });
+
+    localStorage.setItem("customProducts", JSON.stringify(customProducts));
+
+    // Shopping list থেকেও একই custom product থাকলে সরিয়ে দেবে
+    shoppingList = shoppingList.filter(function(item){
+        return !(item.customProductId && String(item.customProductId) === String(id));
+    });
+    saveList();
+
+    // পুরো product area নতুন করে দেখানো
+    document.getElementById("products").innerHTML = "";
+    loadCustomProducts();
+    updateCartCount();
+    showNote();
+
+    alert("✅ পণ্য মুছে ফেলা হয়েছে!");
+}
+
+
+/* পুরোনো Custom Product Load */
+
+function loadCustomProducts(){
+
+customProducts.forEach(
+function(product){
+
+addProductCard(product);
+
+});
+
+}
+
+
+/* Note */
+
+function showNote(){
+
+let note="<h2>📝 আজকের বাজার</h2>";
+
+if(shoppingList.length===0){
+
+note+="<p>এখনো কোনো পণ্য নির্বাচন করা হয়নি।</p>";
+
+}
+
+shoppingList.forEach(function(item,index){
+
+note+=`
+
+<div class="note-item">
+
+<span class="note-product">
+${item.image ? `<img src="${item.image}" class="note-product-image" alt="${item.name}">` : "🛒"}
+<span>${item.name} —
+${item.amount} ${item.unit}</span>
+
+${
+item.price!==""
+?
+" — 💰 "+item.price+" টাকা"
+:
+""
+}
+
+</span>
+
+<div style="display:flex;gap:5px;flex-shrink:0;">
+<button
+class="edit-btn"
+onclick="editItem(${index})">
+
+✏️
+
+</button>
+
+<button
+class="delete-btn"
+onclick="deleteProduct(${index})">
+
+❌
+
+</button>
+</div>
+
+</div>
+
+`;
+
+});
+
+
+if(shoppingList.length>0){
+
+note+=`
+
+<button
+class="save-btn"
+onclick="saveMessage()">
+
+💾 তালিকা Save করুন
+
+</button>
+
+<button
+class="copy-btn"
+onclick="copyNote()">
+
+📋 নোট কপি করুন
+
+</button>
+
+<button
+class="share-btn"
+onclick="shareNote()">
+
+📤 Share
+
+</button>
+
+<button
+class="clear-btn"
+onclick="clearAll()">
+
+🗑️ সব মুছে ফেলুন
+
+</button>
+
+`;
+
+}
+
+
+document.getElementById("note").innerHTML=note;
+
+}
+
+
+/* Category Filter */
+
+function filterCategory(
+category,
+button
+){
+
+currentCategory=category;
+
+document
+.querySelectorAll(".category-btn")
+.forEach(function(btn){
+
+btn.classList.remove("active");
+
+});
+
+button.classList.add("active");
+
+searchProducts();
+
+}
+
+
+/* Search */
+
+function searchProducts(){
+
+let searchText =
+document
+.getElementById("searchInput")
+.value
+.toLowerCase();
+
+let products =
+document.querySelectorAll(
+"#products .product"
+);
+
+products.forEach(function(product){
+
+let name =
+product
+.querySelector("h2")
+.innerText
+.toLowerCase();
+
+let category =
+product.getAttribute("data-category");
+
+let categoryMatch =
+currentCategory==="all" ||
+category===currentCategory;
+
+let searchMatch =
+name.includes(searchText);
+
+if(categoryMatch && searchMatch){
+
+product.style.display="";
+
+}else{
+
+product.style.display="none";
+
+}
+
+});
+
+}
+
+
+/* নতুন Category */
+
+function addCategory(){
+    let input=document.getElementById("newCategoryName");
+    let categoryName=input.value.trim();
+
+    if(categoryName===""){
+        alert("ক্যাটাগরির নাম লিখুন");
+        return;
+    }
+
+    let exists=customCategories.some(function(category){
+        return category.name.toLowerCase()===categoryName.toLowerCase();
+    });
+
+    if(exists){
+        alert("এই Category আগে থেকেই আছে");
+        return;
+    }
+
+    let category={
+        id:"custom_"+Date.now()+"_"+Math.random().toString(36).substring(2,7),
+        name:categoryName
+    };
+
+    customCategories.push(category);
+    localStorage.setItem("customCategories",JSON.stringify(customCategories));
+
+    input.value="";
+    loadCustomCategories();
+    alert("✅ নতুন ক্যাটাগরি Save হয়েছে!");
+}
+
+/* Category Button */
+function addCategoryButton(category){
+    let button=document.createElement("button");
+    button.className="category-btn custom-category-btn";
+    button.type="button";
+    button.onclick=function(){ filterCategory(category.id,button); };
+    button.innerText=category.name;
+    document.getElementById("categories").appendChild(button);
+}
+
+/* Dropdown Option */
+function addCategoryOption(category){
+    let option=document.createElement("option");
+    option.value=category.id;
+    option.innerText=category.name;
+    option.className="custom-category-option";
+    document.getElementById("newCategory").appendChild(option);
+}
+
+/* Custom Category Load */
+function loadCustomCategories(){
+    document.querySelectorAll(".custom-category-btn").forEach(function(button){
+        button.remove();
+    });
+
+    document.querySelectorAll(".custom-category-option").forEach(function(option){
+        option.remove();
+    });
+
+    customCategories.forEach(function(category){
+        addCategoryButton(category);
+        addCategoryOption(category);
+    });
+
+    renderMyCategories();
+}
+
+/* আমার যোগ করা Category-এর তালিকা */
+function renderMyCategories(){
+    let box=document.getElementById("myCategories");
+    if(!box) return;
+
+    box.innerHTML="";
+
+    if(customCategories.length===0){
+        box.innerHTML="<p style='color:#64748b'>এখনো কোনো নতুন ক্যাটাগরি যোগ করা হয়নি।</p>";
+        return;
+    }
+
+    customCategories.forEach(function(category,index){
+        let row=document.createElement("div");
+        row.className="my-category";
+
+        let name=document.createElement("span");
+        name.innerText=category.name;
+        name.style.fontWeight="bold";
+
+        let btn=document.createElement("button");
+        btn.type="button";
+        btn.className="category-delete";
+        btn.innerText="🗑️ Delete";
+        btn.onclick=function(){ deleteCategory(index); };
+
+        row.appendChild(name);
+        row.appendChild(btn);
+        box.appendChild(row);
+    });
+}
+
+/* Custom Category Delete */
+function deleteCategory(index){
+    if(index < 0 || index >= customCategories.length){
+        return;
+    }
+
+    var category = customCategories[index];
+    var categoryId = String(category.id);
+
+    // এই category-এর custom product মুছে দেবে
+    customProducts = customProducts.filter(function(product){
+        return String(product.category) !== categoryId;
+    });
+    localStorage.setItem("customProducts", JSON.stringify(customProducts));
+
+    // category মুছে দেবে
+    customCategories.splice(index, 1);
+    localStorage.setItem("customCategories", JSON.stringify(customCategories));
+
+    // Home category + Product dropdown + My Categories আবার তৈরি
+    document.querySelectorAll(".custom-category-btn").forEach(function(btn){ btn.remove(); });
+    document.querySelectorAll(".custom-category-option").forEach(function(opt){ opt.remove(); });
+
+    customCategories.forEach(function(cat){
+        addCategoryButton(cat);
+        addCategoryOption(cat);
+    });
+
+    renderMyCategories();
+
+    // Product cards refresh
+    document.getElementById("products").innerHTML = "";
+    loadCustomProducts();
+
+    alert("✅ ক্যাটাগরি মুছে ফেলা হয়েছে!");
+}
+
+
+/* Category Page */
+function showCategoryPage(){
+    renderMyCategories();
+}
+
+/* App Start */
+
+loadCustomCategories();
+
+loadCustomProducts();
+
+showNote();
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>
