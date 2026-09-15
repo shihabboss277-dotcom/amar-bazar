@@ -1,0 +1,10 @@
+{
+  "name": "আমার বাজার",
+  "short_name": "Amar Bazar",
+  "description": "সহজেই আপনার বাজারের তালিকা তৈরি করুন",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#16a34a",
+  "icons": []
+}
