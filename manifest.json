@@ -1,6 +1,6 @@
 {
   "name": "আমার বাজার",
-  "short_name": "Amar Bazar",
+  "short_name": "আমার বাজার",
   "description": "সহজেই আপনার বাজারের তালিকা তৈরি করুন",
   "start_url": "./",
   "display": "standalone",
